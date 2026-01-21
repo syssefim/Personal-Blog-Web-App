@@ -3,12 +3,13 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
+@app.route("/home")
 def home():
-    return render_template("index.html")
+    return render_template("home.html")
 
-@app.route("/post_1")
-def post_1():
-    return render_template("index.html")
+#import the articles blueprint
+from articles import articles
+app.register_blueprint(articles)
 
 
 
