@@ -1,15 +1,71 @@
 from flask import Flask, render_template
+import json #vcode
+import os   #vcode
 
 app = Flask(__name__)
+
+DATA_FILE = 'data.json' #vcode
+
+
+
+
+
+#--------------- vcode ---------------
+# --- Helper Functions ---
+
+def load_articles():
+    """Reads all articles from the JSON file."""
+    # If the file doesn't exist yet (first run), return an empty list
+    if not os.path.exists(DATA_FILE):
+        return []
+    
+    # Open the file in 'read' mode ('r')
+    with open(DATA_FILE, 'r') as f:
+        try:
+            return json.load(f)  # Convert JSON text back into a Python list
+        except json.JSONDecodeError:
+            return [] # Return empty list if file is corrupted
+
+def save_articles(articles):
+    """Writes the list of articles back to the JSON file."""
+    # Open file in 'write' mode ('w')
+    with open(DATA_FILE, 'w') as f:
+        # indent=4 makes the file human-readable
+        json.dump(articles, f, indent=4)
+
+def get_article(id):
+    """Finds a specific article by its ID."""
+    articles = load_articles()
+    for article in articles:
+        # We convert both to strings to ensure they match safely
+        if str(article['id']) == str(id):
+            return article
+    return None
+
+
+#-------------------------------------
+
+
+
+
+
+
+
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template("home.html")
 
-#import the articles blueprint
-from articles import articles
-app.register_blueprint(articles)
+@app.route("/article/<id>")
+def view_article(id):
+    article = get_article(id)
+    
+    if article:
+        return render_template("article.html", article=article)
+    else:
+        return "Article not found", 404
+
 
 
 
