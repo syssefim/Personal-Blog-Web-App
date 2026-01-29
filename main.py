@@ -4,7 +4,7 @@ import os   #vcode
 
 app = Flask(__name__)
 
-DATA_FILE = 'data.json' #vcode
+DATA_FILE = 'articles.json' #vcode
 
 
 
