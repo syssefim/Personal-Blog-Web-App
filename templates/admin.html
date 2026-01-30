@@ -2,22 +2,16 @@
 <html>
     <head>
         <title>
-            Home Page
+            Admin Page
         </title>
     </head>
     <body>
         <h1>Personal Blog</h1>
         <h2>Articles:</h2>
         <ul>
-            <!--
-            <li><a href="/article/{{articles[0].id}}">{{articles[0].title}}</a></li>
-            <li><a href="/article/{{articles[1].id}}">{{articles[1].title}}</a></li>-->
             {% for a in articles %}
                 <li><a href="/article/{{a.id}}">{{a.title}}</a>      {{a.publication_date}}</li>
             {% endfor %}
         </ul>
-    </body>
-    <body>
-        <h2><a href="/login">Log in</a></h2>
     </body>
 </html>

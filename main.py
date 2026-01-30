@@ -3,7 +3,7 @@ import json #vcode
 import os   #vcode
 
 app = Flask(__name__)
-
+app.secret_key = 'super_secret_key'
 DATA_FILE = 'articles.json' #vcode
 
 
@@ -55,7 +55,9 @@ def get_article(id):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    articles = load_articles()
+
+    return render_template("home.html", articles=articles)
 
 @app.route("/article/<id>")
 def view_article(id):
@@ -83,7 +85,7 @@ def login():
 
         if username == "admin" and password == "password":
             session["logged_in"] = True
-            return redirect(url_for("home"))
+            return redirect(url_for("admin"))
         else:
             flash("Invalid credentials")
 
@@ -97,6 +99,22 @@ def logout():
     return redirect(url_for("home"))
 
 
+
+
+
+
+
+
+
+
+#admin pages
+@app.route('/admin')
+def admin():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    articles = load_articles()
+    return render_template('admin.html', articles=articles)
 
 if __name__ == "__main__":
     app.run()
