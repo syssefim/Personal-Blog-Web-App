@@ -1,10 +1,23 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask_sqlalchemy import SQLAlchemy
 import json #vcode
 import os   #vcode
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
 DATA_FILE = 'articles.json' #vcode
+
+
+
+
+
+
+
+
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/students'
+db=SQLAlchemy(app)
+
+
 
 
 
