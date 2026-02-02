@@ -10,7 +10,7 @@
         <h2>Articles:</h2>
         <ul>
             {% for a in articles %}
-                <li><a href="/article/{{a.id}}">{{a.title}}</a>      {{a.publication_date}}</li>
+                <li><a href="/admin/edit/{{a.id}}">{{a.title}}</a>      {{a.date}}</li>
             {% endfor %}
         </ul>
     </body>

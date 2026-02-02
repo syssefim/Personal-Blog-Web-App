@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
-import json #vcode
-import os   #vcode
+import json
+import os
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
@@ -102,6 +102,22 @@ def admin():
     articles = Article.query.all()
     return render_template("admin.html", articles=articles)
 
+@app.route("/admin/edit/<id>", methods=["GET", "POST"])
+def edit_article(id):
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+    article = Article.query.get_or_404(id)
+
+    if request.method == "POST":
+        article.title = request.form["title"]
+        article.date = request.form["date"]
+        article.content = request.form["content"]
+
+        db.session.commit()
+        return redirect(url_for('home'))
+    
+    return render_template("edit.html", article=article)
 
 if __name__ == "__main__":
     app.run()
