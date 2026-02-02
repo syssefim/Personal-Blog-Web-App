@@ -9,11 +9,12 @@
         <h1>Personal Blog</h1>
         <h2>Articles:</h2>
         <ul>
-            <!--
-            <li><a href="/article/{{articles[0].id}}">{{articles[0].title}}</a></li>
-            <li><a href="/article/{{articles[1].id}}">{{articles[1].title}}</a></li>-->
             {% for a in articles %}
-                <li><a href="/article/{{a.id}}">{{a.title}}</a>      {{a.publication_date}}</li>
+                <li>
+                    <a href="/article/{{a.id}}">{{a.title}}</a>      {{a.publication_date}}
+                </li>
+            {% else %}
+                <p>No articles available.</p>
             {% endfor %}
         </ul>
     </body>
