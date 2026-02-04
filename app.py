@@ -48,7 +48,7 @@ with app.app_context():
 @app.route("/home")
 def home():
     articles = Article.query.all()
-    return render_template("home.html", articles=articles)
+    return render_template("home.html", articles=articles, is_logged_in=session.get("logged_in"))
 
 @app.route("/article/<id>")
 def view_article(id):

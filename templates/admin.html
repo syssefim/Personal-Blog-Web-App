@@ -6,7 +6,7 @@
         </title>
     </head>
     <body>
-        <h1>Personal Blog Admin Page</h1>
+        <h1>Personal Blog Admin Page<button onclick="window.location.href='/admin/new'">+ Add</button></h1>
         <h2>Articles:</h2>
         <ul>
             {% for a in articles %}
@@ -16,6 +16,6 @@
         </ul>
     </body>
     <body>
-        <h2><a href="/logout">Log Out</a></h2>
+        <a href="/logout">Log Out</a>
     </body>
 </html>
