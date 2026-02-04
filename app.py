@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 from flask_sqlalchemy import SQLAlchemy
 import json
 import os
+import datetime
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
@@ -94,6 +95,7 @@ def logout():
 
 
 #admin pages
+#home page for admin
 @app.route("/admin")
 def admin():
     if not session.get("logged_in"):
@@ -102,6 +104,7 @@ def admin():
     articles = Article.query.all()
     return render_template("admin.html", articles=articles)
 
+#edit article
 @app.route("/admin/edit/<id>", methods=["GET", "POST"])
 def edit_article(id):
     if not session.get("logged_in"):
@@ -115,9 +118,39 @@ def edit_article(id):
         article.content = request.form["content"]
 
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for("home"))
     
     return render_template("edit.html", article=article)
+
+#new article
+@app.route("/admin/new", methods=["GET", "POST"])
+def new_article():
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        #the form gets the title and content from the user
+        title = request.form["title"]
+        content = request.form["content"]
+
+        #then use datetime to get the current date
+        current_datetime = datetime.datetime.now()
+        date = current_datetime.strftime("%B %d, %Y")
+
+        article = Article(title=title, date=date, content=content)
+        db.session.add(article)
+        db.session.commit()
+        return redirect(url_for("home"))
+    
+    return render_template("new.html")
+
+#delete article
+@app.route("/admin/delete/<id>")
+def delete_article(id):
+    article = Article.query.get_or_404(id)
+    db.session.delete(article)
+    db.session.commit()
+    return redirect(url_for("admin"))
 
 if __name__ == "__main__":
     app.run()

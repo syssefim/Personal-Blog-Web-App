@@ -6,12 +6,16 @@
         </title>
     </head>
     <body>
-        <h1>Personal Blog</h1>
+        <h1>Personal Blog Admin Page</h1>
         <h2>Articles:</h2>
         <ul>
             {% for a in articles %}
-                <li><a href="/admin/edit/{{a.id}}">{{a.title}}</a>      {{a.date}}</li>
+                <li>{{a.title}}<button onclick="window.location.href='/admin/edit/{{a.id}}'">Edit</button>
+                <button onclick="window.location.href='/admin/delete/{{a.id}}'">Delete</button></li>
             {% endfor %}
         </ul>
+    </body>
+    <body>
+        <h2><a href="/logout">Log Out</a></h2>
     </body>
 </html>
