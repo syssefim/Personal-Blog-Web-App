@@ -3,6 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 import os
 import datetime
+from dotenv import load_dotenv
+
+
+
+
+
+
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
@@ -13,8 +20,10 @@ app.secret_key = 'super_secret_key'
 
 
 
-
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:password@localhost/personal_blog_db'
+# Load variables from the .env file
+load_dotenv()
+db_password = os.getenv("DB_PASSWORD")
+app.config['SQLALCHEMY_DATABASE_URI']=f'postgresql://postgres:{db_password}@localhost/personal_blog_db'
 db=SQLAlchemy(app)
 
 
