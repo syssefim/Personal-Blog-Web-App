@@ -25,33 +25,32 @@ Ensure you have the following installed on your machine:
 
 ### 1. Clone the Repo
     git clone https://github.com/syssefim/Personal-Blog-Web-App
+    cd Personal-Blog-Web-App
 ### 2. Install Dependencies
-    pip install flask flask-sqlalchemy psycopg2-binary
+    pip install flask flask-sqlalchemy psycopg2-binary python-dotenv
 ### 3. Database Setup
 You need to create the database and user. Open your PostgreSQL tool (pgAdmin or psql) and run:
 
-CREATE DATABASE personal_blog_db;
-CREATE USER personal_blog_admin WITH PASSWORD 'password123';
-GRANT ALL PRIVILEGES ON DATABASE personal_blog_db TO blog_admin;
+    CREATE DATABASE personal_blog_db;
+    CREATE USER personal_blog_admin WITH PASSWORD 'password123';
+    GRANT ALL PRIVILEGES ON DATABASE personal_blog_db TO personal_blog_admin;
+    GRANT ALL ON SCHEMA public TO personal_blog_admin;
 
-### 4. Database Seeding
+### 4. Configuration
+Create a file named `.env` in the root directory to store sensitive credentials, and add the following lines:
+
+    DATABASE_URL=postgresql://personal_blog_admin:password123@localhost/personal_blog_db
+    SECRET_KEY=your_secret_key_here
+    
+### 5. Database Seeding
 Now, populate the database with sample data by running the following command in the terminal:
 
     python3 seed_db.py
 
-### 5. Configuration
-Create a file named `.env` in the root directory to store sensitive credentials, and add the following lines:
-
-    DB_PASSWORD=YOUR_PASSWORD_HERE
-    DB_USER=postgres
-    DB_NAME=personal_blog_db
-    DB_HOST=localhost
-    DB_PORT=5432
-Set 'DB_PASSWORD' to be your PostgreSQL password.
-
 ### 6. Run the Application
 In your terminal, run:
-python app.py
+
+    python3 app.py
 
 ### 7. Access the App
 Open your web browser and go to:
